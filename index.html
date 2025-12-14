@@ -1,13 +1,76 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>web-adobe-dreamweaver</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dreamweaver Clone - A modern web IDE built with React and TypeScript" />
+  <meta name="theme-color" content="#1e1e1e" />
+  <title>Adobe Dreamweaver</title>
+  <!-- Preload fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Critical CSS for initial load */
+    html,
+    body,
+    #root {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #1e1e1e;
+    }
+
+    /* Loading state */
+    .initial-loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .initial-loader .spinner {
+      height: 40px;
+      width: 40px;
+      border: 3px solid #3c3c3c;
+      border-top-color: #0078d4;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .initial-loader .text {
+      margin-top: 16px;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="root">
+    <!-- Initial loading states -->
+    <div class="initial-loader">
+      <div class="spinner"></div>
+      <div class="text">Loading...</div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
