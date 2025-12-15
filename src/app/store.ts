@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import editorReducer from '../features/editor/editorSlice'
 import fileExplorerReducer from '../features/fileExplorer/fileExplorerSlice'
 import projectReducer from '../features/project/projectSlice'
+import workspaceReducer from '../features/workspace/workspaceSlice'
 
 export const store = configureStore({
   reducer: {
     editor: editorReducer,
     fileExplorer: fileExplorerReducer,
     project: projectReducer,
+    workspace: workspaceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
