@@ -8,7 +8,6 @@ const ContextMenu: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const { contextMenu, tree } = useAppSelector(state => state.fileExplorer)
 	const menuRef = React.useRef<HTMLDivElement>(null)
-
 	const { isOpen, x, y, targetPath } = contextMenu;
 
 	// Find the target node
