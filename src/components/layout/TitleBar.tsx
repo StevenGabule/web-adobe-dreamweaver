@@ -17,7 +17,7 @@ const TitleBar: React.FC = () => {
 		parts.push(currentProject.name)
 	}
 
-	parts.push('Dreamweaver clone')
+	parts.push('Dreamweaver')
 
 	const title = parts.join(' - ');
 
@@ -41,36 +41,22 @@ const TitleBar: React.FC = () => {
 	];
 
 	return (
-		<div className='
-      flex items-center h-7.5
-      bg-titlebar-bg
-      border-b border-panel-border
-      select-none
-      app-drag'>
+		<div className='flex items-center h-7.5 bg-titlebar-bg border-b border-panel-border select-none app-drag'>
 			{/* Menu Button (for when in browser) */}
 			<button className='flex items-center justify-center w-12 h-full hover:bg-hover app-no-drag'>
 				<Menu size={14} className='text-sidebar-fg/70' />
 			</button>
 
 			{/* Menu Items */}
-			<div className="flex items-center gap-0 app-no-drag">
+			<div className="flex items-center gap-2 app-no-drag">
 				{menuItems.map((menu) => (
 					<div key={menu.label} className='relative group'>
 						<button className='px-3 h-7.5 text-xs text-sidebar-fg/90 hover:bg-hover'>{menu.label}</button>
 
 						{/* Dropdown (simple hover implementation) */}
-						<div className='
-              hidden group-hover:block
-              absolute top-full left-0 z-50
-              min-w-50 py-1
-              bg-[#3c3c3c] border border-[#454545]
-              shadow-xl rounded-b-md
-							'>
+						<div className='hidden group-hover:block absolute top-full left-0 z-50 min-w-50 py-1 bg-[#3c3c3c] border border-[#454545] shadow-xl rounded-b-md'>
 							{menu.items.map((item, idx) => (
-								<button key={idx} className='
-                    w-full px-4 py-1.5 text-left text-xs
-                    text-editor-fg hover:bg-accent
-									'>
+								<button key={idx} className='w-full px-4 py-1.5 text-left text-xs text-editor-fg hover:bg-red'>
 									{item}
 								</button>
 							))}
