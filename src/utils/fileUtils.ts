@@ -1,328 +1,319 @@
-import { v4 as uuidv4 } from "uuid";
-import type { FileNode } from "../types";
+import { v4 as uuidv4 } from 'uuid'
+import type { FileNode } from '../types'
 
 // File extension to language mapping for monaco
 export const extensionToLanguage: Record<string, string> = {
   // Web
-  html: "html",
-  htm: "html",
-  css: "css",
-  scss: "scss",
-  sass: "sass",
-  less: "less",
-  js: "javascript",
-  jsx: "javascript",
-  ts: "typescript",
-  tsx: "typescript",
-  json: "json",
+  html: 'html',
+  htm: 'html',
+  css: 'css',
+  scss: 'scss',
+  sass: 'sass',
+  less: 'less',
+  js: 'javascript',
+  jsx: 'javascript',
+  ts: 'typescript',
+  tsx: 'typescript',
+  json: 'json',
 
   // Backend
-  php: "php",
-  py: "python",
-  rb: "ruby",
-  java: "java",
-  go: "go",
-  rs: "rust",
+  php: 'php',
+  py: 'python',
+  rb: 'ruby',
+  java: 'java',
+  go: 'go',
+  rs: 'rust',
 
   // Config
-  xml: "xml",
-  yaml: "yaml",
-  toml: "toml",
-  ini: "ini",
-  env: "plaintext",
+  xml: 'xml',
+  yaml: 'yaml',
+  toml: 'toml',
+  ini: 'ini',
+  env: 'plaintext',
 
   // Documentation
-  md: "markdown",
-  mdx: "markdown",
-  txt: "plaintext",
+  md: 'markdown',
+  mdx: 'markdown',
+  txt: 'plaintext',
 
   // Data
-  sql: "sql",
-  graphql: "graphql",
+  sql: 'sql',
+  graphql: 'graphql',
 
   // Shell
-  sh: "shell",
-  bash: "shell",
-  zsh: "shell",
-  ps1: "powershell",
+  sh: 'shell',
+  bash: 'shell',
+  zsh: 'shell',
+  ps1: 'powershell',
 
   // other
-  svg: "xml",
-  vue: "vue",
-  svelte: "svelte",
-};
+  svg: 'xml',
+  vue: 'vue',
+  svelte: 'svelte',
+}
 
 // Get language from file path
 export const getLanguageFromPath = (filePath: string): string => {
-  const extension = filePath.split(".").pop()?.toLowerCase() || "";
-  return extensionToLanguage[extension] || "plaintext";
-};
+  const extension = filePath.split('.').pop()?.toLowerCase() || ''
+  return extensionToLanguage[extension] || 'plaintext'
+}
 
 // Get file extension
 export const getFileExtension = (filename: string): string => {
-  const parts = filename.split(".");
-  return parts.length > 1 ? parts.pop()?.toLowerCase() || "" : "";
-};
+  const parts = filename.split('.')
+  return parts.length > 1 ? parts.pop()?.toLowerCase() || '' : ''
+}
 
 // Get filename from path
 export const getFilenameFromPath = (path: string): string => {
-  return path.split("/").pop() || path;
-};
+  return path.split('/').pop() || path
+}
 
 // Get parent path
 export const getParentPath = (path: string): string => {
-  const parts = path.split("/");
-  parts.pop();
-  return parts.join("/") || "/";
-};
+  const parts = path.split('/')
+  parts.pop()
+  return parts.join('/') || '/'
+}
 
 // Join paths
 export const joinPaths = (...paths: string[]): string => {
   return paths
     .map((path, index) => {
       if (index === 0) {
-        return path.replace(/\/+$/, "");
+        return path.replace(/\/+$/, '')
       }
-      return path.replace(/^\/+|\/+$/g, "");
+      return path.replace(/^\/+|\/+$/g, '')
     })
     .filter(Boolean)
-    .join("/");
-};
+    .join('/')
+}
 
 // Check if file is image
 export const isImageFile = (filename: string): boolean => {
-  const imageExtension = [
-    "png",
-    "jpg",
-    "jpeg",
-    "gif",
-    "webp",
-    "svg",
-    "ico",
-    "bmp",
-  ];
-  const ext = getFileExtension(filename);
-  return imageExtension.includes(ext);
-};
+  const imageExtension = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'ico', 'bmp']
+  const ext = getFileExtension(filename)
+  return imageExtension.includes(ext)
+}
 
 // Check if file is binary
 export const isBinaryFile = (filename: string): boolean => {
   const binaryExtensions = [
-    "png",
-    "jpg",
-    "jpeg",
-    "gif",
-    "webp",
-    "ico",
-    "bmp",
-    "pdf",
-    "doc",
-    "docx",
-    "xls",
-    "xlsx",
-    "ppt",
-    "pptx",
-    "zip",
-    "rar",
-    "7z",
-    "tar",
-    "gz",
-    "mp3",
-    "mp4",
-    "wav",
-    "avi",
-    "mov",
-    "mkv",
-    "exe",
-    "dll",
-    "so",
-    "dylib",
-    "woff",
-    "woff2",
-    "ttf",
-    "otf",
-    "eot",
-  ];
+    'png',
+    'jpg',
+    'jpeg',
+    'gif',
+    'webp',
+    'ico',
+    'bmp',
+    'pdf',
+    'doc',
+    'docx',
+    'xls',
+    'xlsx',
+    'ppt',
+    'pptx',
+    'zip',
+    'rar',
+    '7z',
+    'tar',
+    'gz',
+    'mp3',
+    'mp4',
+    'wav',
+    'avi',
+    'mov',
+    'mkv',
+    'exe',
+    'dll',
+    'so',
+    'dylib',
+    'woff',
+    'woff2',
+    'ttf',
+    'otf',
+    'eot',
+  ]
 
-  const ext = getFileExtension(filename);
-  return binaryExtensions.includes(ext);
-};
+  const ext = getFileExtension(filename)
+  return binaryExtensions.includes(ext)
+}
 
 // Sort files (folders first, then alphabetically)
 export const sortFiles = (files: FileNode[]): FileNode[] => {
   return [...files].sort((a, b) => {
     // Folder come first
-    if (a.type === "folder" && b.type === "file") return -1;
-    if (a.type === "file" && b.type === "folder") return 1;
+    if (a.type === 'folder' && b.type === 'file') return -1
+    if (a.type === 'file' && b.type === 'folder') return 1
 
     // then sort alphabetically (case-insensitive)
-    return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-  });
-};
+    return a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+  })
+}
 
 // Create a mock file tree for demo purposes
 export const createMockFileTree = (): FileNode => {
   return {
     id: uuidv4(),
-    name: "my-website",
-    path: "/my-website",
-    type: "folder",
+    name: 'my-website',
+    path: '/my-website',
+    type: 'folder',
     isExpanded: true,
     children: sortFiles([
       {
         id: uuidv4(),
-        name: "src",
-        path: "/my-website/src",
-        type: "folder",
+        name: 'src',
+        path: '/my-website/src',
+        type: 'folder',
         isExpanded: true,
         children: sortFiles([
           {
             id: uuidv4(),
-            name: "components",
-            path: "/my-website/src/components",
-            type: "folder",
+            name: 'components',
+            path: '/my-website/src/components',
+            type: 'folder',
             children: sortFiles([
               {
                 id: uuidv4(),
-                name: "Header.tsx",
-                path: "/my-website/src/components/Header.tsx",
-                type: "file",
-                extension: "tsx",
+                name: 'Header.tsx',
+                path: '/my-website/src/components/Header.tsx',
+                type: 'file',
+                extension: 'tsx',
               },
               {
                 id: uuidv4(),
-                name: "Footer.tsx",
-                path: "/my-website/src/components/Footer.tsx",
-                type: "file",
-                extension: "tsx",
+                name: 'Footer.tsx',
+                path: '/my-website/src/components/Footer.tsx',
+                type: 'file',
+                extension: 'tsx',
               },
               {
                 id: uuidv4(),
-                name: "Button.tsx",
-                path: "/my-website/src/components/Button.tsx",
-                type: "file",
-                extension: "tsx",
+                name: 'Button.tsx',
+                path: '/my-website/src/components/Button.tsx',
+                type: 'file',
+                extension: 'tsx',
               },
             ]),
           },
           {
             id: uuidv4(),
-            name: "styles",
-            path: "/my-website/src/styles",
-            type: "folder",
+            name: 'styles',
+            path: '/my-website/src/styles',
+            type: 'folder',
             children: sortFiles([
               {
                 id: uuidv4(),
-                name: "globals.css",
-                path: "/my-website/src/styles/globals.css",
-                type: "file",
-                extension: "css",
+                name: 'globals.css',
+                path: '/my-website/src/styles/globals.css',
+                type: 'file',
+                extension: 'css',
               },
               {
                 id: uuidv4(),
-                name: "variables.css",
-                path: "/my-website/src/styles/variables.css",
-                type: "file",
-                extension: "css",
+                name: 'variables.css',
+                path: '/my-website/src/styles/variables.css',
+                type: 'file',
+                extension: 'css',
               },
             ]),
           },
           {
             id: uuidv4(),
-            name: "App.tsx",
-            path: "/my-website/src/App.tsx",
-            type: "file",
-            extension: "tsx",
+            name: 'App.tsx',
+            path: '/my-website/src/App.tsx',
+            type: 'file',
+            extension: 'tsx',
           },
           {
             id: uuidv4(),
-            name: "main.tsx",
-            path: "/my-website/src/main.tsx",
-            type: "file",
-            extension: "tsx",
+            name: 'main.tsx',
+            path: '/my-website/src/main.tsx',
+            type: 'file',
+            extension: 'tsx',
           },
         ]),
       },
       {
         id: uuidv4(),
-        name: "public",
-        path: "/my-website/public",
-        type: "folder",
+        name: 'public',
+        path: '/my-website/public',
+        type: 'folder',
         children: sortFiles([
           {
             id: uuidv4(),
-            name: "images",
-            path: "/my-website/public/images",
-            type: "folder",
+            name: 'images',
+            path: '/my-website/public/images',
+            type: 'folder',
             children: sortFiles([
               {
                 id: uuidv4(),
-                name: "logo.svg",
-                path: "/my-website/public/images/logo.svg",
-                type: "file",
-                extension: "svg",
+                name: 'logo.svg',
+                path: '/my-website/public/images/logo.svg',
+                type: 'file',
+                extension: 'svg',
               },
               {
                 id: uuidv4(),
-                name: "hero.png",
-                path: "/my-website/public/images/hero.png",
-                type: "file",
-                extension: "png",
+                name: 'hero.png',
+                path: '/my-website/public/images/hero.png',
+                type: 'file',
+                extension: 'png',
               },
             ]),
           },
           {
             id: uuidv4(),
-            name: "favicon.ico",
-            path: "/my-website/public/favicon.ico",
-            type: "file",
-            extension: "ico",
+            name: 'favicon.ico',
+            path: '/my-website/public/favicon.ico',
+            type: 'file',
+            extension: 'ico',
           },
         ]),
       },
       {
         id: uuidv4(),
-        name: "index.html",
-        path: "/my-website/index.html",
-        type: "file",
-        extension: "html",
+        name: 'index.html',
+        path: '/my-website/index.html',
+        type: 'file',
+        extension: 'html',
       },
       {
         id: uuidv4(),
-        name: "package.json",
-        path: "/my-website/package.json",
-        type: "file",
-        extension: "json",
+        name: 'package.json',
+        path: '/my-website/package.json',
+        type: 'file',
+        extension: 'json',
       },
       {
         id: uuidv4(),
-        name: "tsconfig.json",
-        path: "/my-website/tsconfig.json",
-        type: "file",
-        extension: "json",
+        name: 'tsconfig.json',
+        path: '/my-website/tsconfig.json',
+        type: 'file',
+        extension: 'json',
       },
       {
         id: uuidv4(),
-        name: "README.md",
-        path: "/my-website/README.md",
-        type: "file",
-        extension: "md",
+        name: 'README.md',
+        path: '/my-website/README.md',
+        type: 'file',
+        extension: 'md',
       },
       {
         id: uuidv4(),
-        name: ".gitignore",
-        path: "/my-website/.gitignore",
-        type: "file",
-        extension: "",
+        name: '.gitignore',
+        path: '/my-website/.gitignore',
+        type: 'file',
+        extension: '',
       },
     ]),
-  };
-};
+  }
+}
 
 // Get mock file content based on path
 export const getMockFileContent = (path: string): string => {
   const contents: Record<string, string> = {
-    "/my-website/index.html": `<!DOCTYPE html>
+    '/my-website/index.html': `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -335,7 +326,7 @@ export const getMockFileContent = (path: string): string => {
   <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>`,
-    "/my-website/src/App.tsx": `import { useState } from 'react';
+    '/my-website/src/App.tsx': `import { useState } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Button from './components/Button';
@@ -369,7 +360,7 @@ function App() {
 }
 
 export default App;`,
-    "/my-website/src/main.tsx": `import React from 'react';
+    '/my-website/src/main.tsx': `import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './styles/globals.css';
@@ -379,7 +370,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <App />
   </React.StrictMode>
 );`,
-    "/my-website/src/components/Header.tsx": `import React from 'react';
+    '/my-website/src/components/Header.tsx': `import React from 'react';
 
 interface HeaderProps {
   title?: string;
@@ -412,7 +403,7 @@ const Header: React.FC<HeaderProps> = ({ title = 'My Website' }) => {
 };
 
 export default Header;`,
-    "/my-website/src/components/Footer.tsx": `import React from 'react';
+    '/my-website/src/components/Footer.tsx': `import React from 'react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -452,7 +443,7 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;`,
-    "/my-website/src/components/Button.tsx": `import React from 'react';
+    '/my-website/src/components/Button.tsx': `import React from 'react';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -490,7 +481,7 @@ const Button: React.FC<ButtonProps> = ({
 };
 
 export default Button;`,
-    "/my-website/src/styles/globals.css": `/* Global Styles */
+    '/my-website/src/styles/globals.css': `/* Global Styles */
 :root {
   --color-primary: #3b82f6;
   --color-primary-dark: #2563eb;
@@ -664,7 +655,7 @@ body {
   text-align: center;
   color: rgba(255, 255, 255, 0.6);
 }`,
-    "/my-website/src/styles/variables.css": `/* CSS Variables / Design Tokens */
+    '/my-website/src/styles/variables.css': `/* CSS Variables / Design Tokens */
 
 :root {
   /* Colors */
@@ -728,7 +719,7 @@ body {
   --transition-normal: 200ms ease;
   --transition-slow: 300ms ease;
 }`,
-    "/my-website/package.json": `{
+    '/my-website/package.json': `{
   "name": "my-website",
   "private": true,
   "version": "1.0.0",
@@ -752,7 +743,7 @@ body {
     "vite": "^5.0.0"
   }
 }`,
-    "/my-website/tsconfig.json": `{
+    '/my-website/tsconfig.json': `{
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
@@ -777,7 +768,7 @@ body {
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }`,
-    "/my-website/README.md": `# My Website
+    '/my-website/README.md': `# My Website
 
 A modern website built with React and TypeScript.
 
@@ -819,7 +810,7 @@ my-website/
 
 MIT
 `,
-    "/my-website/.gitignore": `# Dependencies
+    '/my-website/.gitignore': `# Dependencies
 node_modules/
 
 # Build output
@@ -849,7 +840,7 @@ npm-debug.log*
 .cache/
 .parcel-cache/
 `,
-    "/my-website/public/images/logo.svg": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    '/my-website/public/images/logo.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <defs>
     <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#3b82f6"/>
@@ -859,7 +850,7 @@ npm-debug.log*
   <circle cx="50" cy="50" r="45" fill="url(#gradient)"/>
   <text x="50" y="65" font-family="Arial" font-size="40" font-weight="bold" fill="white" text-anchor="middle">M</text>
 </svg>`,
-  };
+  }
 
-  return contents[path] || `// File: ${path}\n// Content not available`;
-};
+  return contents[path] || `// File: ${path}\n// Content not available`
+}

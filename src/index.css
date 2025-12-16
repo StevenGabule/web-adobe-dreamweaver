@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* ============================================
    GLOBAL STYLES
@@ -19,7 +19,7 @@ body,
 }
 
 body {
-  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #1e1e1e;
@@ -196,27 +196,25 @@ body {
    PANEL RESIZE HANDLES
    ============================================ */
 
-[data-panel-group-direction="horizontal"] > [data-resize-handle] {
+[data-panel-group-direction='horizontal'] > [data-resize-handle] {
   width: 4px;
   background: transparent;
   transition: background-color 0.15s;
 }
 
-[data-panel-group-direction="horizontal"] > [data-resize-handle]:hover,
-[data-panel-group-direction="horizontal"]
-  > [data-resize-handle][data-resize-handle-active] {
+[data-panel-group-direction='horizontal'] > [data-resize-handle]:hover,
+[data-panel-group-direction='horizontal'] > [data-resize-handle][data-resize-handle-active] {
   background: #007acc;
 }
 
-[data-panel-group-direction="vertical"] > [data-resize-handle] {
+[data-panel-group-direction='vertical'] > [data-resize-handle] {
   height: 4px;
   background: transparent;
   transition: background-color 0.15s;
 }
 
-[data-panel-group-direction="vertical"] > [data-resize-handle]:hover,
-[data-panel-group-direction="vertical"]
-  > [data-resize-handle][data-resize-handle-active] {
+[data-panel-group-direction='vertical'] > [data-resize-handle]:hover,
+[data-panel-group-direction='vertical'] > [data-resize-handle][data-resize-handle-active] {
   background: #007acc;
 }
 
@@ -289,9 +287,9 @@ body {
    INPUT STYLES
    ============================================ */
 
-input[type="text"],
-input[type="number"],
-input[type="search"],
+input[type='text'],
+input[type='number'],
+input[type='search'],
 textarea,
 select {
   background: #3c3c3c;
@@ -304,23 +302,23 @@ select {
   transition: border-color 0.15s;
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="search"]:focus,
+input[type='text']:focus,
+input[type='number']:focus,
+input[type='search']:focus,
 textarea:focus,
 select:focus {
   border-color: #007acc;
   outline: none;
 }
 
-input[type="text"]::placeholder,
-input[type="search"]::placeholder,
+input[type='text']::placeholder,
+input[type='search']::placeholder,
 textarea::placeholder {
   color: #6e6e6e;
 }
 
 /* Checkbox styles */
-input[type="checkbox"] {
+input[type='checkbox'] {
   width: 16px;
   height: 16px;
   accent-color: #0078d4;
@@ -342,7 +340,9 @@ input[type="checkbox"] {
   border: none;
   border-radius: 2px;
   cursor: pointer;
-  transition: background-color 0.15s, opacity 0.15s;
+  transition:
+    background-color 0.15s,
+    opacity 0.15s;
 }
 
 .btn:disabled {
@@ -414,7 +414,9 @@ input[type="checkbox"] {
   color: #969696;
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  transition: color 0.15s, border-color 0.15s;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
 }
 
 .tab:hover {

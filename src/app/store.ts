@@ -3,6 +3,7 @@ import editorReducer from '../features/editor/editorSlice'
 import fileExplorerReducer from '../features/fileExplorer/fileExplorerSlice'
 import projectReducer from '../features/project/projectSlice'
 import workspaceReducer from '../features/workspace/workspaceSlice'
+import cssDesignerReducer from '../features/cssDesigner/cssDesignerSlice'
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     fileExplorer: fileExplorerReducer,
     project: projectReducer,
     workspace: workspaceReducer,
+    cssDesigner: cssDesignerReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
