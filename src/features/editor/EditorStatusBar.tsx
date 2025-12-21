@@ -13,9 +13,9 @@ const EditorStatusBar: React.FC = () => {
 
 	return (
 		<div className='flex items-center justify-between h-5.5 px-2 bg-accent text-white text-xxs select-none'>
+
 			{/* Left Section */}
 			<div className="flex items-center gap-3">
-
 				<button className="flex items-center gap-1 hover:bg-white/10 px-1.5 py-0.5 rounded">
 					<GitBranch size={12} />
 					<span>{gitBranch}</span>

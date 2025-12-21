@@ -11,7 +11,6 @@ interface MonacoEditorProps {
 const MonacoEditor: React.FC<MonacoEditorProps> = ({ fileId }) => {
 	const dispatch = useAppDispatch()
 	const editorRef = React.useRef<editor.IStandaloneCodeEditor | null>(null)
-
 	const file = useAppSelector((state) => state.editor.openFiles.find(f => f.id === fileId))
 	const settings = useAppSelector((state) => state.editor.settings);
 
@@ -97,7 +96,7 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({ fileId }) => {
 									suggestions: [
 										{
 											label: `</${tagName}>`,
-											kind: monaco.language.CompletionItemKind.Snippet,
+											kind: monaco.languages.CompletionItemKind.Snippet,
 											insertText: `$0</${tagName}`,
 											range: {
 												startLineNumber: position.lineNumber,

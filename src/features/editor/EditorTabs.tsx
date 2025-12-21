@@ -31,7 +31,7 @@ const EditorTabs: React.FC = () => {
 		// simple context menu implementation
 		const menu = document.createElement('div');
 		menu.className = `
-			fixed z-50 min-w-[160px] py 
+			fixed z-50 min-w-[160px] py-1 
 			bg-[#3c3c3c] border border-[#454545] 
 			shadow-xl rounded-md text-xs
 		`;
@@ -90,7 +90,11 @@ const EditorTabs: React.FC = () => {
 		<div
 			ref={tabsRef}
 			className="
-				flex items-stretch h-8.75 min-h-8.75 bg-tab-inactive border-b border-panel-border overflow-x-auto overflow-y-hidden scrollbar-thin scrollbar-thumb-panel-border scrollbar-track-transparent
+				flex items-stretch h-8.75 min-h-8.75 
+				bg-tab-inactive 
+				border-b border-panel-border 
+				overflow-x-auto overflow-y-hidden 
+				scrollbar-thin scrollbar-thumb-panel-border scrollbar-track-transparent
 			"
 			onWheel={handleWheel}
 		>{openFiles.map((file) => {
@@ -103,7 +107,9 @@ const EditorTabs: React.FC = () => {
 					onMouseDown={e => handleMiddleClick(e, file.id)}
 					onContextMenu={e => handleContextMenu(e, file.id)}
 					className={`
-						group flex items-center gap-2 px-3 min-w-30 max-w-50 border-r border-panel-border cursor-pointer transition-colors duration-100 
+						group flex items-center gap-2 px-3 min-w-30 max-w-50 
+						border-r border-panel-border cursor-pointer 
+						transition-colors duration-100 
 						${isActive
 							? 'bg-tab-active border-t-2 border-t-accent'
 							: 'bg-tab-inactive hover:bg-hover border-t-2 border-t-transparent'}
@@ -114,7 +120,8 @@ const EditorTabs: React.FC = () => {
 
 					{/* Filename */}
 					<span className={`
-							flex-1 text-xs truncate ${isActive ? 'text-editor-fg' : 'text-sidebar-fg/70'}
+							flex-1 text-xs truncate 
+							${isActive ? 'text-editor-fg' : 'text-sidebar-fg/70'}
 						`}>
 						{file.filename}
 					</span>
@@ -122,10 +129,17 @@ const EditorTabs: React.FC = () => {
 					{/* Dirty indicator / Close button */}
 					<div className="flex items-center justify-center w-4 h-4">
 						{file.isDirty ? (
-							<Circle size={8} className='fill-current text-editor-fg group-hover:hidden' />
+							<Circle
+								size={8}
+								className='fill-current text-editor-fg group-hover:hidden'
+							/>
 						) : null}
 						<button
 							onClick={e => handleCloseTab(e, file.id)}
+							className={`
+									p-0.5 rounded hover:bg-[#ffffff20] 
+									${file.isDirty ? 'hidden group-hover:block' : 'opacity-0 group-hover:opacity-100'}
+								`}
 						>
 							<X size={14} className='text-sidebar-fg/70 hover:text-editor-fg' />
 						</button>

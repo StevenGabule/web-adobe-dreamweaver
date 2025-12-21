@@ -1,7 +1,7 @@
 import type React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hook/useRedux';
-import { Code2, Columns, FileCode } from 'lucide-react';
-import { setSplitView } from './editorSlice';
+import { Code2, Columns, FileCode, Rows } from 'lucide-react';
+import { setSplitMode } from './editorSlice';
 import EditorTabs from './EditorTabs';
 import MonacoEditor from './MonacoEditor';
 import EditorStatusBar from './EditorStatusBar';
@@ -76,25 +76,25 @@ const EditorPane: React.FC = () => {
 				{/* Split view controls */}
 				<div className="flex items-center gap-1 px-2">
 					<button
-						onClick={() => dispatch(setSplitView('none'))}
+						onClick={() => dispatch(setSplitMode('none'))}
 						className={`p-1.5 rounded ${splitMode === 'none' ? 'bg-accent' : 'hover:bg-hover'}`}
 						title='Single Editor'
 					>
 						<FileCode size={14} className='text-editor-fg/70' />
 					</button>
 					<button
-						onClick={() => dispatch(setSplitView('vertical'))}
+						onClick={() => dispatch(setSplitMode('vertical'))}
 						className={`p-1.5 rounded ${splitMode === 'vertical' ? 'bg-accent' : 'hover:bg-hover'}`}
 						title='Split Vertically'
 					>
 						<Columns size={14} className='text-editor-fg/70' />
 					</button>
 					<button
-						onClick={() => dispatch(setSplitView('horizontal'))}
+						onClick={() => dispatch(setSplitMode('horizontal'))}
 						className={`p-1.5 rounded ${splitMode === 'horizontal' ? 'bg-accent' : 'hover:bg-hover'}`}
 						title='Split Horizontal'
 					>
-						<Columns size={14} className='text-editor-fg/70' />
+						<Rows size={14} className='text-editor-fg/70' />
 					</button>
 				</div>
 			</div>
