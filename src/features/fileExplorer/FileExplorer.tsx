@@ -1,20 +1,20 @@
-import React from 'react';
+import { useState, type FC, type KeyboardEvent } from 'react';
 import { ChevronDown, ChevronRight, FilePlus, FolderPlus, RefreshCw, Search, X } from 'lucide-react';
 import { closeContextMenu, collapseAll, createFile, createFolder, setSearchQuery } from './fileExplorerSlice';
 import { useAppDispatch, useAppSelector } from '../../hook/useRedux';
 import FileTreeNode from './FileTreeNode';
 import ContextMenu from './ContextMenu';
 
-const FileExplorer: React.FC = () => {
+const FileExplorer: FC = () => {
 	const dispatch = useAppDispatch();
 	const { tree, searchQuery, selectedPath } = useAppSelector(state => state.fileExplorer);
 	const { currentProject } = useAppSelector(state => state.project)
 
-	const [isSearching, setIsSearching] = React.useState(false)
-	const [showNewFileInput, setShowNewFileInput] = React.useState(false)
-	const [showNewFolderInput, setShowNewFolderInput] = React.useState(false)
-	const [newItemName, setNewItemName] = React.useState('')
-	const [isExplorerExpanded, setIsExplorerExpanded] = React.useState(true)
+	const [isSearching, setIsSearching] = useState(false)
+	const [showNewFileInput, setShowNewFileInput] = useState(false)
+	const [showNewFolderInput, setShowNewFolderInput] = useState(false)
+	const [newItemName, setNewItemName] = useState('')
+	const [isExplorerExpanded, setIsExplorerExpanded] = useState(true)
 
 	const handleNewFile = () => {
 		if (!newItemName.trim()) {
@@ -40,10 +40,13 @@ const FileExplorer: React.FC = () => {
 		setShowNewFolderInput(false);
 	}
 
-	const handleKeyDown = (e: React.KeyboardEvent, type: 'file' | 'folder') => {
+	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, type: 'file' | 'folder') => {
 		if (e.key === 'Enter') {
-			// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-			type === 'file' ? handleNewFile : handleNewFolder();
+			if (type === 'file') {
+				handleNewFile()
+			} else {
+				handleNewFolder()
+			}
 		} else if (e.key === 'Escape') {
 			setShowNewFileInput(false);
 			setShowNewFolderInput(false);
@@ -88,19 +91,29 @@ const FileExplorer: React.FC = () => {
 					>
 						<Search size={14} />
 					</button>
-					<button title='New File' className='p-1 rounded hover:bg-hover' onClick={() => {
-						setShowNewFileInput(true);
-						setShowNewFolderInput(false);
-					}}>
+					<button
+						title='New File'
+						className='p-1 rounded hover:bg-hover'
+						onClick={() => {
+							setShowNewFileInput(true);
+							setShowNewFolderInput(false);
+						}}>
 						<FilePlus size={14} />
 					</button>
-					<button title='New Folder' className='p-1 rounded hover:bg-hover' onClick={() => {
-						setShowNewFolderInput(true);
-						setShowNewFileInput(false);
-					}}>
+					<button
+						title='New Folder'
+						className='p-1 rounded hover:bg-hover'
+						onClick={() => {
+							setShowNewFolderInput(true);
+							setShowNewFileInput(false);
+						}}>
 						<FolderPlus size={14} />
 					</button>
-					<button title='Collapse All' className='p-1 rounded hover:bg-hover' onClick={() => dispatch(collapseAll())}>
+					<button
+						title='Collapse All'
+						className='p-1 rounded hover:bg-hover'
+						onClick={() => dispatch(collapseAll())}
+					>
 						<RefreshCw size={14} />
 					</button>
 				</div>
@@ -129,6 +142,7 @@ const FileExplorer: React.FC = () => {
 					</div>
 				</div>
 			)}
+
 			{/* Project section */}
 			<div className="flex-1 overflow-x-hidden overflow-y auto">
 				{/* Project Header */}
@@ -182,7 +196,7 @@ const FileExplorer: React.FC = () => {
 
 				{/* File Tree */}
 				{isExplorerExpanded && displayTree && (
-					<div>
+					<div className="pb-4">
 						<FileTreeNode node={displayTree} />
 					</div>
 				)}

@@ -164,7 +164,9 @@ const fileExplorerSlice = createSlice({
     },
     createFolder: (state, action: PayloadAction<{ parentPath: string; name: string }>) => {
       if (!state.tree) return
+
       const { parentPath, name } = action.payload
+
       const newFolder: FileNode = {
         id: uuidv4(),
         name,

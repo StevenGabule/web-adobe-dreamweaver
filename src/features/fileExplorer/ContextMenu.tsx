@@ -1,13 +1,13 @@
-import React from 'react';
+import { useEffect, useRef, type FC, type ReactNode } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hook/useRedux';
 import { closeContextMenu, copyNode, createFile, createFolder, cutNode, deleteNode } from './fileExplorerSlice';
 import { Clipboard, Copy, Edit3, ExternalLink, FileCode, FilePlus, FolderPlus, Scissors, Trash2 } from 'lucide-react';
 import { handleFileDelete, openFile } from '../editor/editorSlice';
 
-const ContextMenu: React.FC = () => {
+const ContextMenu: FC = () => {
 	const dispatch = useAppDispatch();
 	const { contextMenu, tree } = useAppSelector(state => state.fileExplorer)
-	const menuRef = React.useRef<HTMLDivElement>(null)
+	const menuRef = useRef<HTMLDivElement>(null)
 	const { isOpen, x, y, targetPath } = contextMenu;
 
 	// Find the target node
@@ -26,7 +26,7 @@ const ContextMenu: React.FC = () => {
 	const targetNode = targetPath ? findNode(tree, targetPath) : null;
 	const isFolder = targetNode?.type === 'folder';
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const handleClickOutside = (e: MouseEvent) => {
 			if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
 				dispatch(closeContextMenu())
@@ -51,7 +51,7 @@ const ContextMenu: React.FC = () => {
 	}, [isOpen, dispatch]);
 
 	// Adjust position to keep menu in viewport
-	React.useEffect(() => {
+	useEffect(() => {
 		if (isOpen && menuRef.current) {
 			const menu = menuRef.current;
 			const rect = menu.getBoundingClientRect();
@@ -178,7 +178,7 @@ const ContextMenu: React.FC = () => {
 				}
 
 				const { icon, label, shortcut, danger, disabled, onClick } = item as {
-					icon: React.ReactNode;
+					icon: ReactNode;
 					label: string;
 					shortcut?: string;
 					disabled?: boolean;

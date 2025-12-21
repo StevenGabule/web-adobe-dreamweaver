@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef, useState, type FC, type KeyboardEvent, type MouseEvent } from 'react';
 import type { FileNode } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../hook/useRedux';
 import { openContextMenu, renameNode, selectFile, toggleFolder } from './fileExplorerSlice';
@@ -11,26 +11,29 @@ interface FileTreeNodeProps {
 	depth?: number;
 }
 
-const FileTreeNode: React.FC<FileTreeNodeProps> = ({ node, depth = 0 }) => {
+const FileTreeNode: FC<FileTreeNodeProps> = ({ node, depth = 0 }) => {
 	const dispatch = useAppDispatch();
 	const { selectedPath, expandedFolders } = useAppSelector(state => state.fileExplorer)
 
-	const [isRenaming, setIsRenaming] = React.useState(false)
-	const [renameValue, setRenameValue] = React.useState(node.name)
-	const inputRef = React.useRef<HTMLInputElement>(null);
+	const [renaming, setRenaming] = useState({
+		isRenaming: false,
+		renameValue: node.name
+	})
+
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	const isSelected = selectedPath === node.path;
 	const isExpanded = expandedFolders.includes(node.path);
 	const isFolder = node.type === 'folder';
 
-	React.useEffect(() => {
-		if (isRenaming && inputRef.current) {
+	useEffect(() => {
+		if (renaming.isRenaming && inputRef.current) {
 			inputRef.current.focus();
 			inputRef.current.select();
 		}
-	}, [isRenaming]);
+	}, [renaming.isRenaming]);
 
-	const handleClick = (e: React.MouseEvent) => {
+	const handleClick = (e: MouseEvent) => {
 		e.stopPropagation();
 		dispatch(selectFile(node.path))
 
@@ -39,7 +42,7 @@ const FileTreeNode: React.FC<FileTreeNodeProps> = ({ node, depth = 0 }) => {
 		}
 	}
 
-	const handleDoubleClick = (e: React.MouseEvent) => {
+	const handleDoubleClick = (e: MouseEvent) => {
 		e.stopPropagation();
 
 		if (!isFolder) {
@@ -47,7 +50,7 @@ const FileTreeNode: React.FC<FileTreeNodeProps> = ({ node, depth = 0 }) => {
 		}
 	}
 
-	const handleContextMenu = (e: React.MouseEvent) => {
+	const handleContextMenu = (e: MouseEvent) => {
 		e.preventDefault();
 		e.stopPropagation();
 		dispatch(selectFile(node.path));
@@ -61,19 +64,17 @@ const FileTreeNode: React.FC<FileTreeNodeProps> = ({ node, depth = 0 }) => {
 	}
 
 	const handleRenameSubmit = () => {
-		if (renameValue.trim() && renameValue !== node.name) {
-			dispatch(renameNode({ path: node.path, newName: renameValue.trim() }))
+		if (renaming.renameValue.trim() && renaming.renameValue !== node.name) {
+			dispatch(renameNode({ path: node.path, newName: renaming.renameValue.trim() }))
 		}
-		setIsRenaming(false);
-		setRenameValue(node.name)
+		setRenaming({ isRenaming: false, renameValue: node.name });
 	}
 
-	const handleRenameKeyDown = (e: React.KeyboardEvent) => {
+	const handleRenameKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
 			handleRenameSubmit()
 		} else if (e.key === 'Escape') {
-			setIsRenaming(false);
-			setRenameValue(node.name)
+			setRenaming({ isRenaming: false, renameValue: node.name });
 		}
 	}
 
@@ -82,7 +83,6 @@ const FileTreeNode: React.FC<FileTreeNodeProps> = ({ node, depth = 0 }) => {
 	return (
 		<div className="select-none">
 			<div
-
 				className={`flex items-center h-5.5 cursor-pointer hover:bg-hover group ${isSelected ? 'bg-selected' : ''}`}
 				style={{ paddingLeft }}
 				onClick={handleClick}
@@ -109,12 +109,12 @@ const FileTreeNode: React.FC<FileTreeNodeProps> = ({ node, depth = 0 }) => {
 				</span>
 
 				{/* Filename */}
-				{isRenaming ? (
+				{renaming.isRenaming ? (
 					<input
 						ref={inputRef}
 						type={'text'}
-						value={renameValue}
-						onChange={e => setRenameValue(e.target.value)}
+						value={renaming.renameValue}
+						onChange={e => setRenaming(prev => ({ ...prev, renameValue: e.target.value }))}
 						onBlur={handleRenameSubmit}
 						onKeyDown={handleRenameKeyDown}
 						className='flex-1 min-w-0 h-4.5 px-1 bg-editor-bg border border-focus-border text-editor-fg text-xs outline-none'
