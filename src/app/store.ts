@@ -6,6 +6,8 @@ import workspaceReducer from '../features/workspace/workspaceSlice'
 import cssDesignerReducer from '../features/cssDesigner/cssDesignerSlice'
 import previewReducer from '../features/preview/previewSlice'
 import searchReducer from '../features/search/searchSlice'
+import toolbarReducer from '../features/toolbar/toolbarSlice'
+import propertiesReducer from '../features/properties/propertiesSlice'
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +18,8 @@ export const store = configureStore({
     cssDesigner: cssDesignerReducer,
     preview: previewReducer,
     search: searchReducer,
+    toolbar: toolbarReducer,
+    properties: propertiesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
