@@ -98,7 +98,7 @@ const projectSlice = createSlice({
       state.recentProjects = state.recentProjects.filter((p) => p.id !== action.payload)
     },
 
-    // Clear recent projecs
+    // Clear recent projects
     clearRecentProjects: (state) => {
       state.recentProjects = state.currentProject ? [state.currentProject] : []
     },

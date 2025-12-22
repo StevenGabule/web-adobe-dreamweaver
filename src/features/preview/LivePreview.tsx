@@ -26,7 +26,7 @@ const LivePreview: FC = () => {
 
 	// Build the preview HTML
 	const previewContent = useMemo(() => {
-		if (activeFile) {
+		if (!activeFile) {
 			return `
 			<!DOCTYPE html>
         <html>
@@ -49,10 +49,6 @@ const LivePreview: FC = () => {
         </body>
         </html>
 			`;
-		}
-
-		if (activeFile) {
-
 		}
 
 		const { content, language, filename } = activeFile;

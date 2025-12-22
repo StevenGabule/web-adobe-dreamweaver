@@ -162,6 +162,7 @@ const fileExplorerSlice = createSlice({
         state.expandedFolders.push(parentPath)
       }
     },
+    
     createFolder: (state, action: PayloadAction<{ parentPath: string; name: string }>) => {
       if (!state.tree) return
 
