@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/preserve-manual-memoization */
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hook/useRedux';
 import type { editor } from 'monaco-editor'
@@ -27,8 +28,8 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({ fileId }) => {
 			editor.focus();
 
 			// Add keyboard shortcuts
-			editor.addCommand(monaco.keyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
-				dispatch(saveFile(fileId))
+			editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
+				dispatch(saveFile(fileId));
 			});
 
 			// Track cursor position

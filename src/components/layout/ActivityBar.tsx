@@ -1,6 +1,6 @@
 import type React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hook/useRedux';
-import { Files, GitBranch, Icon, Puzzle, Search, Settings, User } from 'lucide-react';
+import { Files, GitBranch, Puzzle, Search, Settings, User } from 'lucide-react';
 import { setActiveActivityItem, toggleSidebar } from '../../features/workspace/workspaceSlice';
 
 const ActivityBar: React.FC = () => {
@@ -36,13 +36,8 @@ const ActivityBar: React.FC = () => {
 			<button
 				key={item.id}
 				onClick={() => handleClick(item.id)}
-				className={`
-					relative w-12 h-12 flex items-center justify-center 
-					transition-colors duration-150 
-					${isActive ? 'text-white' : 'text-sidebar-fg/50 hover:text-sidebar-fg'}
-					`}
-				title={`${item.label} (${item.shortcut})`}
-			>
+				className={`relative w-12 h-12 flex items-center justify-center transition-colors duration-150 ${isActive ? 'text-white' : 'text-sidebar-fg/50 hover:text-sidebar-fg'}`}
+				title={`${item.label} (${item.shortcut})`}>
 				{/* Active indicator */}
 				{isActive && (
 					<div className='absolute left-0 top-0 bottom-0 w-0.5 bg-white' />

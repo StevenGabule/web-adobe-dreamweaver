@@ -17,7 +17,7 @@ const TitleBar: React.FC = () => {
 		parts.push(currentProject.name)
 	}
 
-	parts.push('Dreamweaver')
+	parts.push('IDE Editor')
 
 	const title = parts.join(' - ');
 
